@@ -9,6 +9,7 @@
 ```bash scripts/install_conda.sh```
 
 # Demo Command
+conda activate tcmr_env
 `python demo.py --vid_file demo.mp4 --gpu 0`
 
 # Errors
@@ -97,3 +98,13 @@ RuntimeError: view size is not compatible with input tensor's size and stride (a
 ### Solution
 In ` vim /data/groot/miniconda3/envs/tcmr_env/lib/python3.9/site-packages/smplx/lbs.py` file, replace all `.view()` with `.replace()`
 
+## ModuleNotFoundError: No module named 'tensorboard'
+Traceback (most recent call last):
+  File "/data/amogh/projects/TCMR_RELEASE/train.py", line 13, in <module>
+    from torch.utils.tensorboard import SummaryWriter
+  File "/data/groot/miniconda3/envs/tcmr_env/lib/python3.9/site-packages/torch/utils/tensorboard/__init__.py", line 1, in <module>
+    import tensorboard
+ModuleNotFoundError: No module named 'tensorboard'
+
+### Solution
+`pip install tensorboard`
