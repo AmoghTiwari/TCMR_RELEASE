@@ -280,6 +280,9 @@ def main(args):
     os.makedirs(output_img_folder, exist_ok=True)
     # os.makedirs(input_img_folder, exist_ok=True)
 
+    if args.no_rendering:
+        print("Exitting without rendering as 'no_rendering' was specified in cli args")
+        exit()
     print(f"\nRendering output video, writing frames to {output_img_folder}")
     # prepare results for rendering
     frame_results = prepare_rendering_results(tcmr_results, num_frames)
@@ -400,6 +403,9 @@ if __name__ == '__main__':
                         help='render meshes on plain background')
 
     parser.add_argument('--gpu', type=int, default='1', help='gpu num')
+
+    parser.add_argument('--no_rendering', action='store_true',
+                        help='Exit without rendering.')
 
     args = parser.parse_args()
     os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu)
