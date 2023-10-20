@@ -192,7 +192,7 @@ def main(args):
 
         dataloader = DataLoader(dataset, batch_size=64, num_workers=32)
         with torch.no_grad():
-            pred_cam, pred_verts, pred_pose, pred_betas, pred_joints3d, norm_joints2d = [], [], [], [], [], []
+            pred_cam, pred_verts, pred_pose_3d, pred_betas, pred_joints3d, norm_joints2d, pred_pose_6d, pred_pose_rotmat = [], [], [], [], [], [], [], []
 
             for i, batch in enumerate(dataloader):
                 if has_keypoints:
@@ -203,15 +203,19 @@ def main(args):
                 output = model(batch)[0][-1]
                 pred_cam.append(output['theta'][:, :3])
                 pred_verts.append(output['verts'])
-                pred_pose.append(output['theta'][:, 3:75])
+                pred_pose_3d.append(output['theta'][:, 3:75])
                 pred_betas.append(output['theta'][:, 75:])
                 pred_joints3d.append(output['kp_3d'])
+                pred_pose_6d.append(output['pred_pose_6d'])
+                pred_pose_rotmat.append(output['rotmat'])
 
             pred_cam = torch.cat(pred_cam, dim=0)
             pred_verts = torch.cat(pred_verts, dim=0)
-            pred_pose = torch.cat(pred_pose, dim=0)
+            pred_pose_3d = torch.cat(pred_pose_3d, dim=0)
             pred_betas = torch.cat(pred_betas, dim=0)
             pred_joints3d = torch.cat(pred_joints3d, dim=0)
+            pred_pose_6d = torch.cat(pred_pose_6d, dim=0)
+            pred_pose_rotmat = torch.cat(pred_pose_rotmat, dim=0)
 
             del batch
 
@@ -222,9 +226,11 @@ def main(args):
         # ========= Save results to a pickle file ========= #
         pred_cam = pred_cam.cpu().numpy()
         pred_verts = pred_verts.cpu().numpy()
-        pred_pose = pred_pose.cpu().numpy()
+        pred_pose_3d = pred_pose_3d.cpu().numpy()
         pred_betas = pred_betas.cpu().numpy()
         pred_joints3d = pred_joints3d.cpu().numpy()
+        pred_pose_6d = pred_pose_6d.cpu().numpy()
+        pred_pose_rotmat = pred_pose_rotmat.cpu().numpy()
 
        
         bboxes[:, 2:] = bboxes[:, 2:] * 1.2
@@ -241,12 +247,14 @@ def main(args):
             'pred_cam': pred_cam,  # scale and 3D xy translation to project on the 224x224 cropped image
             'orig_cam': orig_cam,  # scale and 3D xy translation to project on the original image
             'verts': pred_verts,  # 6890 vertices cooordinbates
-            'pose': pred_pose,  # SMPL pose parameters
+            'pose': pred_pose_3d,  # SMPL pose parameters
             'betas': pred_betas,  # SMPL shape parameters
             'joints3d': pred_joints3d,  # 49 joints
             'joints2d': joints2d,  # 49 joints
             'bboxes': bboxes,  # bounding box in original image space
             'frame_ids': frames,  # indices of frames
+            'pose_6d': pred_pose_6d,
+            'pose_rotmat': pred_pose_rotmat
         }
 
         tcmr_results[person_id] = output_dict

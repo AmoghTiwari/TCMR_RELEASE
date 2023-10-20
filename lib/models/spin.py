@@ -261,7 +261,6 @@ class Regressor(nn.Module):
             pred_cam = self.deccam(xc) + pred_cam
 
         pred_rotmat = rot6d_to_rotmat(pred_pose).view(batch_size, 24, 3, 3)
-
         pred_output = self.smpl(
             betas=pred_shape,
             body_pose=pred_rotmat[:, 1:],
@@ -286,7 +285,8 @@ class Regressor(nn.Module):
             'verts'  : pred_vertices,
             'kp_2d'  : pred_keypoints_2d,
             'kp_3d'  : pred_joints,
-            'rotmat' : pred_rotmat
+            'rotmat' : pred_rotmat,
+            'pred_pose_6d'  : pred_pose
         }]
         return output
 
