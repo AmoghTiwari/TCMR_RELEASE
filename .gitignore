@@ -7,4 +7,4 @@ output/
 experiments
 results
 .DS_Store
-out_frames_temp
+tmp_local
