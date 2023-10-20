@@ -272,10 +272,6 @@ def main(args):
         print(f"Saving output results to \'{os.path.join(output_path, 'tcmr_output.pkl')}\'.")
         joblib.dump(tcmr_results, os.path.join(output_path, "tcmr_output.pkl"))
 
-    if args.no_rendering:
-        print("Done. Exitting without rendering as no_rendering specified in args ...")
-        exit() # Exit without rendering
-
     """ Render results as a single video """
     renderer = Renderer(resolution=(orig_width, orig_height), orig_img=True, wireframe=args.wireframe)
 
@@ -404,9 +400,6 @@ if __name__ == '__main__':
                         help='render meshes on plain background')
 
     parser.add_argument('--gpu', type=int, default='1', help='gpu num')
-
-    parser.add_argument('--no_rendering', action='store_true',
-                        help='Exit without rendering if this is specified.')
 
     args = parser.parse_args()
     os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu)
