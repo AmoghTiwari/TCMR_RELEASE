@@ -93,7 +93,7 @@ def run_posetracker(video_file, staf_folder, posetrack_output_folder='/tmp', dis
     )
 
     people_dict = read_posetrack_keypoints(posetrack_output_folder)
-
-    shutil.rmtree(posetrack_output_folder)
+    print(posetrack_output_folder)
+    # shutil.rmtree(posetrack_output_folder)
 
     return people_dict

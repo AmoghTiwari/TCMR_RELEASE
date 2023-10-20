@@ -354,10 +354,10 @@ def main(args):
     images_to_video(img_folder=output_img_folder, output_vid_file=save_output_path)
     # images_to_video(img_folder=input_img_folder, output_vid_file=save_input_path)
     print(f"Saving result video to {os.path.abspath(save_output_path)}")
-    shutil.rmtree(output_img_folder)
-    # shutil.rmtree(input_img_folder)
-    if os.path.isfile(video_file):
-        shutil.rmtree(image_folder)
+    # shutil.rmtree(output_img_folder)
+    # # shutil.rmtree(input_img_folder)
+    # if os.path.isfile(video_file):
+    #     shutil.rmtree(image_folder)
 
 
 if __name__ == '__main__':

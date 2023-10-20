@@ -318,7 +318,7 @@ if __name__ == "__main__":
                 Path(osp.join(out_dir, 'video')).mkdir(parents=True, exist_ok=True)
                 print(f"Saving result video to {osp.abspath(save_path)}")
                 images_to_video(img_folder=osp.join(out_dir, save_seq_name), output_vid_file=save_path)
-                shutil.rmtree(osp.join(out_dir, save_seq_name))
+                # shutil.rmtree(osp.join(out_dir, save_seq_name))
 
             if 'mpii3d' in data_path:
                 target_j3ds = convert_kps(target_j3ds, src='spin', dst='mpii3d_test')
