@@ -276,9 +276,9 @@ def main(args):
     renderer = Renderer(resolution=(orig_width, orig_height), orig_img=True, wireframe=args.wireframe)
 
     output_img_folder = f'{image_folder}_output'
-    input_img_folder = f'{image_folder}_input'
+    # input_img_folder = f'{image_folder}_input'
     os.makedirs(output_img_folder, exist_ok=True)
-    os.makedirs(input_img_folder, exist_ok=True)
+    # os.makedirs(input_img_folder, exist_ok=True)
 
     print(f"\nRendering output video, writing frames to {output_img_folder}")
     # prepare results for rendering
@@ -335,7 +335,7 @@ def main(args):
 
         # save output frames
         cv2.imwrite(os.path.join(output_img_folder, f'{frame_idx:06d}.jpg'), img)
-        cv2.imwrite(os.path.join(input_img_folder, f'{frame_idx:06d}.jpg'), input_img)
+        # cv2.imwrite(os.path.join(input_img_folder, f'{frame_idx:06d}.jpg'), input_img)
 
         if args.display:
             cv2.imshow('Video', img)
@@ -348,14 +348,14 @@ def main(args):
     """ Save rendered video """
     save_output_name = f'tcmr_{vid_name.replace(".mp4", "")}_output.mp4'
     save_output_path = os.path.join(output_path, save_output_name)
-    save_input_name = f'tcmr_{vid_name.replace(".mp4", "")}_input.mp4'
-    save_input_path = os.path.join(output_path, save_input_name)
+    # save_input_name = f'tcmr_{vid_name.replace(".mp4", "")}_input.mp4'
+    # save_input_path = os.path.join(output_path, save_input_name)
 
     images_to_video(img_folder=output_img_folder, output_vid_file=save_output_path)
-    images_to_video(img_folder=input_img_folder, output_vid_file=save_input_path)
+    # images_to_video(img_folder=input_img_folder, output_vid_file=save_input_path)
     print(f"Saving result video to {os.path.abspath(save_output_path)}")
     shutil.rmtree(output_img_folder)
-    shutil.rmtree(input_img_folder)
+    # shutil.rmtree(input_img_folder)
     if os.path.isfile(video_file):
         shutil.rmtree(image_folder)
 
