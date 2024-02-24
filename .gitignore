@@ -7,4 +7,5 @@ output/
 experiments
 results
 .DS_Store
+tmp_dir
 tmp_local
