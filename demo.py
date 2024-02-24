@@ -66,7 +66,7 @@ def main(args):
     if os.path.isfile(video_file):
         if video_file.startswith('https://www.youtube.com'):
             print(f"Donwloading YouTube video \'{video_file}\'")
-            video_file = download_youtube_clip(video_file, '/tmp')
+            video_file = download_youtube_clip(video_file, './tmp_dir')
             if video_file is None:
                 exit('Youtube url is not valid!')
             print(f"YouTube Video has been downloaded to {video_file}...")
@@ -357,10 +357,10 @@ def main(args):
     images_to_video(img_folder=output_img_folder, output_vid_file=save_output_path)
     # images_to_video(img_folder=input_img_folder, output_vid_file=save_input_path)
     print(f"Saving result video to {os.path.abspath(save_output_path)}")
-    # shutil.rmtree(output_img_folder)
-    # # shutil.rmtree(input_img_folder)
-    # if os.path.isfile(video_file):
-    #     shutil.rmtree(image_folder)
+    shutil.rmtree(output_img_folder)
+    # shutil.rmtree(input_img_folder)
+    if os.path.isfile(video_file):
+        shutil.rmtree(image_folder)
 
 
 if __name__ == '__main__':
